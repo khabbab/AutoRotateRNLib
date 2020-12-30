@@ -4,19 +4,23 @@ export function calcDistance(x1, y1, x2, y2) {
     return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 }
 export function calcCenter(x1, y1, x2, y2) {
-    function middle(p1, p2) {
-        return {
-            x: (p1.x + p2.x) / 2,
-            y: (p1.y + p2.y) / 2
-        };
+    return{
+        x:(x1+x2)/2,
+        y:(y1+y2)/2
     }
-    let point1 = { x: x1, y: y1 };
-    let point2 = { x: x2, y: y2 };
-    let mid = middle(point1, point2);
-    return {
-        x: mid.x,
-        y: mid.y
-    };
+    // function middle(p1, p2) {
+    //     return {
+    //         x: (p1.x + p2.x) / 2,
+    //         y: (p1.y + p2.y) / 2
+    //     };
+    // }
+    // let point1 = { x: x1, y: y1 };
+    // let point2 = { x: x2, y: y2 };
+    // let mid = middle(point1, point2);
+    // return {
+    //     x: mid.x,
+    //     y: mid.y
+    // };
 }
 export function maxOffset(offset, windowDimension, imageDimension) {
     let max = windowDimension - imageDimension;
