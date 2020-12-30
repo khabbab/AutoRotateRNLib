@@ -131,10 +131,10 @@ export default class SvgPanZoom extends Component<Props, State> {
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
       onPanResponderGrant: (evt, gestureState) => {
-        // Set self for filtering events from other PanResponderTarges
-        if (this.prTargetSelf == null) { 
-          if (this.prTargetOuter == null) { this.prTargetOuter = evt.currentTarget }
-          if (evt.target !== evt.currentTarget) { this.prTargetSelf = evt.target }
+         // Set self for filtering events from other PanResponderTarges
+         if (evt.target !== this.prTargetSelf || evt.target !== this.prTargetOuter) {
+          if (this.prTargetOuter == null) { this.prTargetOuter = evt.currentTarget; }
+          if (evt.target !== evt.currentTarget) { this.prTargetSelf = evt.target; }
         }
        },
       onPanResponderMove: (evt, gestureState) => {

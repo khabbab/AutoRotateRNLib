@@ -185,13 +185,9 @@ class SvgPanZoom extends react_1.Component {
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
             onPanResponderGrant: (evt, gestureState) => {
                 // Set self for filtering events from other PanResponderTarges
-                if (this.prTargetSelf == null) {
-                    if (this.prTargetOuter == null) {
-                        this.prTargetOuter = evt.currentTarget;
-                    }
-                    if (evt.target !== evt.currentTarget) {
-                        this.prTargetSelf = evt.target;
-                    }
+                if (evt.target !== this.prTargetSelf || evt.target !== this.prTargetOuter) {
+                    if (this.prTargetOuter == null) { this.prTargetOuter = evt.currentTarget; }
+                    if (evt.target !== evt.currentTarget) { this.prTargetSelf = evt.target; }
                 }
             },
             onPanResponderMove: (evt, gestureState) => {
@@ -242,24 +238,24 @@ class SvgPanZoom extends react_1.Component {
             this.props.style
         ])} onLayout={this._onLayout} {...this.prInstance.panHandlers}>
 
-        <react_native_1.Animated.View style={{
-            width: this.props.canvasWidth,
-            height: this.props.canvasHeight,
-            transform: [
-                { translateX: this.state.TranslationAnimation.x },
-                { translateY: this.state.TranslationAnimation.y },
-                { scale: this.state.scaleAnimation }
-            ]
-        }}>
-          <react_native_svg_1.Svg style={{
-            width: this.props.canvasWidth,
-            height: this.props.canvasHeight,
-        }}>
-            {this.props.children}
-          </react_native_svg_1.Svg>
-        </react_native_1.Animated.View>
+            <react_native_1.Animated.View style={{
+                width: this.props.canvasWidth,
+                height: this.props.canvasHeight,
+                transform: [
+                    { translateX: this.state.TranslationAnimation.x },
+                    { translateY: this.state.TranslationAnimation.y },
+                    { scale: this.state.scaleAnimation }
+                ]
+            }}>
+                <react_native_svg_1.Svg style={{
+                    width: this.props.canvasWidth,
+                    height: this.props.canvasHeight,
+                }}>
+                    {this.props.children}
+                </react_native_svg_1.Svg>
+            </react_native_1.Animated.View>
 
-      </react_native_1.View>);
+        </react_native_1.View>);
     }
     getInitialViewTransform(canvasWidth, canvasHeight, scale) {
         return util_1.viewTransformMult(util_1.createTranslationMatrix(-(canvasWidth - canvasWidth * scale) / 2, -(canvasHeight - canvasHeight * scale) / 2), util_1.createScalingMatrix(scale));

@@ -185,13 +185,9 @@ export default class SvgPanZoom extends Component {
             onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
             onPanResponderGrant: (evt, gestureState) => {
                 // Set self for filtering events from other PanResponderTarges
-                if (this.prTargetSelf == null) {
-                    if (this.prTargetOuter == null) {
-                        this.prTargetOuter = evt.currentTarget;
-                    }
-                    if (evt.target !== evt.currentTarget) {
-                        this.prTargetSelf = evt.target;
-                    }
+                if (evt.target !== this.prTargetSelf || evt.target !== this.prTargetOuter) {
+                    if (this.prTargetOuter == null) { this.prTargetOuter = evt.currentTarget; }
+                    if (evt.target !== evt.currentTarget) { this.prTargetSelf = evt.target; }
                 }
             },
             onPanResponderMove: (evt, gestureState) => {
@@ -239,20 +235,22 @@ export default class SvgPanZoom extends Component {
             viewStyle
         ])} onLayout={this._onLayout} {...this.prInstance.panHandlers}>
 
-        <Animated.View style={Object.assign({ width: canvasWidth, height: canvasHeight, transform: [
-                { translateX: this.state.TranslationAnimation.x },
-                { translateY: this.state.TranslationAnimation.y },
-                { scale: this.state.scaleAnimation }
-            ] }, canvasStyle)}>
-          <SvgView style={{
-            width: canvasWidth,
-            height: canvasHeight,
-        }}>
-            {children}
-          </SvgView>
-        </Animated.View>
+            <Animated.View style={Object.assign({
+                width: canvasWidth, height: canvasHeight, transform: [
+                    { translateX: this.state.TranslationAnimation.x },
+                    { translateY: this.state.TranslationAnimation.y },
+                    { scale: this.state.scaleAnimation }
+                ]
+            }, canvasStyle)}>
+                <SvgView style={{
+                    width: canvasWidth,
+                    height: canvasHeight,
+                }}>
+                    {children}
+                </SvgView>
+            </Animated.View>
 
-      </View>);
+        </View>);
     }
     getInitialViewTransform(canvasWidth, canvasHeight, scale) {
         return viewTransformMult(createTranslationMatrix(-(canvasWidth - canvasWidth * scale) / 2, -(canvasHeight - canvasHeight * scale) / 2), createScalingMatrix(scale));
