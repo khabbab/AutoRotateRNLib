@@ -139,7 +139,7 @@ export function getBoundedTouchTransform(
     y: (canvasHeight - scaledCanvas.height) / 2
   }
 
-  const extendPercentage = 0.7
+  const extendPercentage = 0.9
   const extendLimit = (viewDim.width * extendPercentage)
 
   //Entire Canvas can be seen within the view
