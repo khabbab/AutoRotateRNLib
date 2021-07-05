@@ -208,7 +208,7 @@ export default class SvgPanZoom extends Component {
             }
             const { viewTransform, initialGestureState, initialTransform, viewDimensions } = this.state;
             const { canvasWidth, canvasHeight } = this.props;
-            let rotDim=rotatedDim(canvasWidth,canvasHeight,this.state.rotateAnimation)
+            let rotDim=rotatedDim(canvasWidth,canvasHeight,this.lastRotation)
             /*gestureState holds total displacement since pan started.
               Here we calculate difference since last call of processTouch */
             const displacement = {
