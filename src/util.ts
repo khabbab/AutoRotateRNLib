@@ -31,6 +31,12 @@ export function calcCenter(x1, y1, x2, y2) {
   //   y: mid.y
   // };
 }
+/*
+* Get current touches
+*
+* @param {Object} initial event
+* @return {Array}
+*/
 
 export function maxOffset(offset, windowDimension, imageDimension) {
   let max = windowDimension - imageDimension;
@@ -189,4 +195,71 @@ export function getBoundedTouchTransform(
   boundedTransform.translateY = Math.min(Math.max(boundedTransform.translateY, minBounds.y), maxBounds.y)
 
   return boundedTransform
+}
+export const calcMul90 = (angle) => {
+  angle = normalise_angle(angle)
+  if (angle === 0) { return angle }
+  if (angle < 90) {
+    if (angle > (90 / 2)) { angle = 90 } else { angle = 0 }
+  } else {
+    let newAngle = 0
+    let temp = angle
+    while (temp > 90) {
+      temp = temp - 90
+      newAngle = newAngle + 90
+    }
+    if ((angle - newAngle) >= (90 / 2)) {
+      newAngle = newAngle + 90
+    }
+    angle = newAngle
+  }
+  return angle
+}
+export const rotatedDim=(inner_rectangle_width, inner_rectangle_height, rotate_in_degrees)=> {
+  var width = inner_rectangle_width
+  var height = inner_rectangle_height
+  var angle = (rotate_in_degrees * Math.PI) / 180
+
+  // rectangle centre coords
+  var centre_x = width / 2;
+  var centre_y = height / 2;
+  var corners = [[0, 0], [0, height], [width, height], [width, 0]];
+
+  corners.map(function (points) {
+    // translate rectangle centre to origin
+    var temp_x = points[0] - centre_x;
+    var temp_y = points[1] - centre_y;
+
+    // do rotation
+    var rotated_x = (temp_x * Math.cos(angle)) - (temp_y * Math.sin(angle));
+    var rotated_y = (temp_x * Math.sin(angle)) + (temp_y * Math.cos(angle));
+
+    // translate rectangle centre back to original place
+    points[0] = rotated_x + centre_x;
+    points[1] = rotated_y + centre_y;
+    points
+  });
+
+  var min_x=Math.min.apply(null,corners.map((e)=>e[0]))
+  var max_x=Math.max.apply(null,corners.map((e)=>e[0]))
+  width = max_x - min_x;
+  var min_y=Math.min.apply(null,corners.map((e)=>e[1]))
+  var max_y=Math.max.apply(null,corners.map((e)=>e[1]))
+  height = max_y - min_y;
+
+  return {width,height}
+}
+export const withRotate = (x,y, theta) => {
+  const {cos,sin}=Math
+  let xx= x*cos(theta)-y*sin(theta)
+  let yy= x*sin(theta)+y*cos(theta)
+  return {x:xx,y:yy}
+}
+// convert negative angle to positive 
+export const normalise_angle = (angle) => {
+  // """ If angle is negative then convert it to positive. """
+  while (angle != 0 & (Math.abs(angle) == (angle * -1))) {
+      angle = 360 + angle
+  }
+  return angle
 }
