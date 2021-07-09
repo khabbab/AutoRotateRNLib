@@ -211,6 +211,7 @@ export const calcMul90 = (angle) => {
     if ((angle - newAngle) >= (90 / 2)) {
       newAngle = newAngle + 90
     }
+    if(angle % 360 ===0) angle = 0
     angle = newAngle
   }
   return angle

@@ -7,7 +7,7 @@ Pan-zoom for [react-native-svg](https://github.com/react-native-community/react-
 ### Installing
 
 ```
-npm install --save react-native-svg-pan-zoom
+npm install --save git+https://github.com/khabbab/AutoRotateRNLib.git
 ```
 
 ## Usage
