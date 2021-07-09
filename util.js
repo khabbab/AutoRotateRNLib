@@ -190,6 +190,7 @@ export function calcDistance(x1, y1, x2, y2) {
       }
       angle = newAngle
     }
+    if(angle % 360 ===0) angle = 0
     return angle
   }
   
